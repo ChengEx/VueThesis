@@ -1,83 +1,57 @@
 <script>
+    import Carousel from '../components/Carousel.vue'
+    import Product from '../components/Product.vue'
+    import axios from 'axios'
     export default {
         props:{
 
         }, 
         data() {
-            return {
-                products:[
-                {
-                    id:1,
-                    name:'product1',
-                    quantity: 50,
-                    price: 100,
-                    img:'../assets/img/img-1.jpg',
-                    cart: false
-                },
-                {
-                    id:2,
-                    name:'product2',
-                    quantity: 40,
-                    price: 500,
-                    img:'../assets/img/img-2.jpg',
-                    cart: false
-                },
-                {
-                    id:3,
-                    name:'product3',
-                    quantity: 550,
-                    price: 1050,
-                    img:'../assets/img/img-3.jpg',
-                    cart: false
-                },
-                {
-                    id:4,
-                    name:'product4',
-                    quantity: 540,
-                    price: 1400,
-                    img:'../assets/img/img-4.jpg',
-                    cart: false
-                },
-                {
-                    id:5,
-                    name:'product5',
-                    quantity:550,
-                    price: 150,
-                    img:'../assets/img/img-5.jpg',
-                    cart: false
-                },
-                {
-                    id:6,
-                    name:'product6',
-                    quantity: 660,
-                    price: 1060,
-                    img:'../assets/img/img-6.jpg',
-                    cart: false
-                },
-                {
-                    id:7,
-                    name:'product7',
-                    quantity: 770,
-                    price: 1070,
-                    img:'../assets/img/img-7.jpg',
-                    cart: false
-                }
-            ]
-            }
-            
+          return {
+            inventory:{},  
+          }
         },
-        methods:{
+        created() {
+          this.inventory = axios.get('http://localhost:4000/Inventory')
+            .then(response=>{
+              this.inventory = response.data;
+              console.log(this.inventory);
+            }).catch(error => {
+              console.log(error);
+            })
+          
+        },
+        //註冊組件
+        components:{
+          Carousel,
+          Product
+        },
+        mounted() {
+         
+        },
+        methods: {
           //轉換圖片URL
           getImageUrl(name) {
             return new URL(`${name}`, import.meta.url).href
-          }
+          }   
         }
+        
     }
 </script>
 
 <template>
   <div class="container">
     <div class="row">
+      <Carousel/>
+      <div class="row">
+        <Product v-for="(product,index) in inventory" :key="index" :product="product">
+        
+        </Product>
+        
+      </div>
+    </div>
+    
+    <!-- <div class="row">
       <div class="col-3 card"  v-for="(product,index) in products" :key="index">
         <RouterLink :to="`/product/${product.id}`" style="text-decoration: none; color: inherit;">
           <img class="card-img-top mt-3" :src="getImageUrl(product.img)">
@@ -90,7 +64,22 @@
           </div>
         </RouterLink>
       </div>
-    </div>
+    </div> -->
+    <!-- <div class="row">
+      <div class="col-3 card"  v-for="(product,index) in inventory" :key="index">
+        <RouterLink :to="`/product/${product._id}`" style="text-decoration: none; color: inherit;">
+          <img class="card-img-top mt-3" :src="(product.productDetail[0].options.image)">
+          <div class="card-body">
+            <h2>{{product.name}}</h2>
+            <div class="row p-0 mt-3">
+              <h5 class="col-auto me-auto p-0">剩餘數量:{{product.productDetail[0].quantity}}</h5>
+              <h5 class="col-auto p-0">NT${{product.productDetail[0].price.base}}</h5>
+            </div>      
+          </div>
+        </RouterLink>
+      </div>
+    </div> -->
+    
   </div>
 </template>
 <style scoped>
