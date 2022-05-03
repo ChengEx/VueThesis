@@ -1,7 +1,7 @@
 <template>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <RouterLink class="navbar-brand" aria-current="page" to="/">Navbar</RouterLink>
+    <RouterLink class="navbar-brand" aria-current="page" to="/">電商平台</RouterLink>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"> </span>
     </button>
@@ -32,10 +32,10 @@
         
       </ul>
       <div>
-        <RouterLink class="nav-link" to="/" style="text-decoration: none; color: inherit;">會員</RouterLink>
+        <RouterLink class="nav-link" to="/signin" style="text-decoration: none; color: inherit;">Sign in</RouterLink>
       </div>
       <div>
-        <RouterLink class="nav-link" to="/" style="text-decoration: none; color: inherit;">購物車</RouterLink>
+        <RouterLink class="nav-link" to="/" style="text-decoration: none; color: inherit;">Cart</RouterLink>
       </div>
       <!-- <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
