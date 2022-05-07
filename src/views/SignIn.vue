@@ -1,27 +1,43 @@
 <script>
     import Cookies from 'js-cookie'
+    import { signIn } from '../api.js'
     export default {
         data() {
             return{
                 loginForm: {
-                    username: '',
+                    email: '',
                     password: '',
                     token: ''
                 }
             }
         },
-        // methods
+        methods :{
+            async SignInSubmit(){
+                await signIn({
+                // await APIRequest.post('/Customer/signin',{
+                    email: this.loginForm.email,
+                    password: this.loginForm.password
+                }).then((res)=>{
+                    console.log("res:",res)
+                    //localStorage.setItem('token',res.data.token)
+                    localStorage.setItem('profile', JSON.stringify(res.data));
+
+                }).catch((error)=>{
+                    alert(error.response.data.message)
+                })
+            }
+        }
     }
 </script>
 <template>
     <div class="form_box main">
-        <form id="login_form" class="form_class" action="login/login-access.php" method="post">
+        <form id="login_form" class="form_class"  @submit.prevent="SignInSubmit" method="post">
             <div class="form_div">
                 <label>Email:</label>
-                <input class="field_class" name="login_txt" type="text" placeholder="email" autofocus>
+                <input class="field_class" name="login_txt" type="text" v-model="loginForm.email" placeholder="email" autofocus>
                 <label>Password:</label>
-                <input id="pass" class="field_class" name="password_txt" type="password" placeholder="password">
-                <button class="submit_class" type="submit" form="login_form" onclick="return validarLogin()">Login</button>
+                <input id="pass" class="field_class" name="password_txt" type="password" v-model="loginForm.password" placeholder="password">
+                <button class="submit_class" type="submit" form="login_form">Login</button>
             </div>
             <div class="info_div">
                 <p>還沒成為會員嗎? 

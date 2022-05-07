@@ -1,18 +1,22 @@
 <script>
     import Carousel from '../components/Carousel.vue'
     import Product from '../components/Product.vue'
-    import axios from 'axios'
-    export default {
-        props:{
+    import { getInventories } from '../api'
 
-        }, 
+    export default {
+        props:['user'], 
         data() {
           return {
-            inventory:{},  
+
+            inventory: {},  
           }
         },
         created() {
-          this.inventory = axios.get('http://localhost:4000/Inventory')
+
+          // console.log("home",user)
+          // this.user.firstName = localStorage.getItem('profile').firstName;
+          // this.user.lastName = localStorage.getItem('profile').lastName;
+          this.inventory = getInventories()
             .then(response=>{
               this.inventory = response.data;
               //console.log(this.inventory);

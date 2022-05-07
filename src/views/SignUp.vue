@@ -1,13 +1,41 @@
 <script>
     import Cookies from 'js-cookie'
+    import useVuelidate from '@vuelidate/core'
+    import { required, email, minLength, sameAs } from '@vuelidate/validators'
+    import { reactive, computed } from 'vue'
+    import { signUp } from '../api.js'
+
     export default {
-        data() {
-            return{
-                SignUpForm: {
-                    username: '',
-                    password: '',
-                    token: ''
+        name: "SignUpView",
+        setup(){
+            const state =  reactive({
+                email:'',
+                password:'',
+                password_confirm:'',
+                firstname: '',
+                lastname: '',
+                phone:'',
+                address:{
+                    city:'',
+                    street:''
                 },
+            })
+
+            const rules = computed(()=> {
+                return {
+                    email: {required, email},
+                    password: {required, minLength:minLength(6)},
+                    password_confirm: {required, sameAs:sameAs(state.password)},
+                    firstname: {required, minLength:minLength(1)},
+                    lastname: {required, minLength:minLength(1)},
+                    phone: {required, minLength:minLength(10)},
+                }
+            })
+            const v$ = useVuelidate(rules, state);
+            return {state, v$}
+        },
+        data() {
+            return{               
                 Citylists:[
                     {item:'臺北市'},
                     {item:'新北市'},
@@ -34,56 +62,137 @@
                 ]
             }
         },
-        // methods
+        methods: {
+            async SignUpSubmit() {
+                this.v$.$validate()
+                if(!this.v$.$error){               
+                    await signUp({
+                    // await APIRequest.post('/Customer/signup',{
+                        email: this.state.email,
+                        password: this.state.password,
+                        firstName: this.state.firstname,
+                        lastName: this.state.lastname,
+                        phone: this.state.phone,
+                        address:{
+                            city:this.state.city,
+                            street: this.state.street
+                        }     
+                    }).then((res)=>{
+                        console.log(res)
+                        alert('Form successfully submit')
+                        this.$router.push('/signin')  
+                    }).catch((error)=>{
+                        alert(error.response.data.message)                    
+                    })
+                }else{
+                    alert('Form failed validation')
+                }
+            }
+        }
     }
 </script>
 <template>
     <div class="form_box main">
-        <form id="signup_form" class="form_class" action="login/login-access.php" method="post">
+        <form id="signup_form" class="form_class" @submit.prevent="SignUpSubmit" method="post">
             <div class="form_div">
                 <div class="row">
                     <h1>Sign Up</h1>
                 </div>
-                <div class="row mt-3">              
-                    <div class="col-6">
-                        <input class="field_class" name="email_txt" type="text" placeholder="Email">
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <h5 class="title">信箱:</h5>
                     </div>
-                    <div class="col-6">
-                        <input class="field_class" name="password_txt" type="text" placeholder="Password">
+                    <div class="col-9">
+                        <input class="field_class" name="email_txt" v-model="state.email" type="text" placeholder="Email" autofocus>
+                        <span v-if="v$.email.$error">
+                            {{ v$.email.$errors[0].$message }}
+                        </span>                      
                     </div>
                 </div>
-                <div class="row">              
+                <div class="row">
                     <div class="col-3">
-                        <input class="field_class" name="firstname_txt" type="text" placeholder="FirstName" autofocus>
+                        <h5 class="title">密碼:</h5>
                     </div>
-                    <div class="col-3">
-                        <input class="field_class" name="lastname_txt" type="text" placeholder="LastName">
-                    </div>
-                    <div class="col-6">
-                        <input class="field_class" name="phone_txt" type="text" placeholder="Phone">
+                    <div class="col-9">
+                        <input class="field_class" name="password_txt" v-model="state.password" type="text" placeholder="Password">
+                        <span v-if="v$.password.$error">
+                            {{ v$.password.$errors[0].$message }}
+                        </span> 
                     </div>
                 </div>
-                
-                <div class="row">              
+                 <div class="row">              
+                    <div class="col-3">
+                        <h5 class="title">確認密碼:</h5>
+                    </div>
+                    <div class="col-9">
+                        <input class="field_class" name="password_confirm_txt" v-model="state.password_confirm" type="text" placeholder="Password Confirm">
+                        <span v-if="v$.password_confirm.$error">
+                            {{ v$.password_confirm.$errors[0].$message }}
+                        </span> 
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-3">
+                        <h5 class="title">姓名:</h5>
+                    </div>              
                     <div class="col-4">
-                       <select class="form-select form-select-sm field_class" aria-label="Default select example">
-                            <option v-for="city in Citylists" :value="city.item">
+                        <input class="field_class" name="firstname_txt" v-model="state.firstname" type="text" placeholder="FirstName">
+                        <span v-if="v$.firstname.$error">
+                            {{ v$.firstname.$errors[0].$message }}
+                        </span> 
+                    </div>
+                    <div class="col-5">
+                        <input class="field_class" name="lastname_txt"  v-model="state.lastname"  type="text" placeholder="LastName">
+                        <span v-if="v$.lastname.$error">
+                            {{ v$.lastname.$errors[0].$message }}
+                        </span> 
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <h5 class="title">電話:</h5>
+                    </div>  
+                    <div class="col-9">
+                        <input class="field_class" name="phone_txt" v-model="state.phone"  type="text" placeholder="Phone">
+                        <span v-if="v$.phone.$error">
+                            {{ v$.phone.$errors[0].$message }}
+                        </span> 
+                    </div>
+                </div>
+                <div class="row"> 
+                    <div class="col-3">
+                        <h5 class="title">地址:</h5>
+                    </div>
+                    <div class="col-3">
+                       <select class="form-select form-select-sm field_class" aria-label="Default select example" v-model="state.city">
+                            <option v-for="city in Citylists" :value="city.item" >
                                 {{ city.item }}
                             </option>
                         </select>
+                        <!-- <span v-if="v$.address.city.$error">
+                            {{ v$.address.city.$errors[0].$message }}
+                        </span>  -->
                     </div>
-                    <div class="col-8">
-                        <input class="field_class" name="address_txt" type="text" placeholder="Address">
+                    <div class="col-6">
+                        <input class="field_class" name="address_txt" v-model="state.street" type="text" placeholder="Address">
+                        <!-- <span v-if="v$.address.street.$error">
+                            {{ v$.address.street.$errors[0].$message }}
+                        </span>  -->
                     </div>
                 </div>
                 
             
-                <button class="submit_class" type="submit" form="signup_form" onclick="return validarLogin()">Sign Up</button>
+                <button class="submit_class" type="submit" form="signup_form">Sign Up</button>
             </div>
         </form>
     </div>
 </template>
 <style>
+span{
+    text-transform: lowercase;
+    color: red;
+}
 * {
     padding: 0px;
     margin: 0px;
@@ -97,6 +206,7 @@ h1 {
     text-transform: uppercase;
     text-align: center;
 }
+
 .main {
     display: flex;
     align-items: center;
@@ -112,7 +222,7 @@ h1 {
     justify-content: center;
 }
 .form_class {
-    width: 700px;
+    width: 600px;
     padding: 40px;
     border-radius: 8px;
     background-color: white;
@@ -123,7 +233,7 @@ h1 {
     text-transform: uppercase;
 }
 .form_div > label {
-    letter-spacing: 3px;
+    letter-spacing: 1px;
     font-size: 1rem;
 }
 .info_div {
@@ -141,10 +251,10 @@ h1 {
     padding: 5px 0px;
     text-indent: 6px;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-family: 'system-ui';
     font-size: 0.9rem;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 .submit_class {
     border-style: none;
@@ -172,11 +282,16 @@ footer {
 footer > p {
     text-align: center;
     font-family: 'system-ui';
-    letter-spacing: 3px;
+    letter-spacing: 1px;
 }
 footer > p > a {
     text-decoration: none;
     color: white;
     font-weight: bold;
+}
+.title{
+    font-family: 'system-ui';
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 </style>

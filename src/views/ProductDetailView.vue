@@ -1,5 +1,6 @@
 <script>
     import axios from 'axios'
+    import { getInventoryById } from '../api.js'
     export default {
         data(){
             return {
@@ -13,7 +14,8 @@
             }
         },
         created() {
-          axios.get('http://localhost:4000/Inventory/'+this.$route.params.id)
+            getInventoryById()
+        //APIRequest.get('/Inventory/'+this.$route.params.id)
             .then(response=>{
               this.productdata = response.data;
             }).catch(error => {
