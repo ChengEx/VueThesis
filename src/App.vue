@@ -1,18 +1,19 @@
 <script>
-  import { RouterLink, RouterView } from 'vue-router'
+  // import { RouterLink, RouterView } from 'vue-router'
   import Navbar from './components/Navbar.vue'
   import Footer from './components/Footer.vue'
+
   export default {
     data(){
       return{
         // user: JSON.parse(localStorage.getItem('profile'))
-        user:"hi"
       }
       
     },
-    // created() {
-    //   this.user = JSON.parse(localStorage.getItem('profile'))
-    // },
+    created() {
+      // const user = JSON.parse(localStorage.getItem('profile'))
+      // this.$store.dispatch('user', user)
+    },
 
     components: {
       Navbar,
@@ -29,9 +30,9 @@
 
 
 <template>
-  <Navbar :user="user"/>
+  <Navbar/>
   <!-- <button @click="test"></button> -->
-  <RouterView />
+  <router-view />
   <Footer/>
 </template>
 

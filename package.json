@@ -17,7 +17,8 @@
     "popper.js": "^1.16.1",
     "vue": "^3.2.33",
     "vue-router": "^4.0.14",
-    "vuelidate": "^0.7.7"
+    "vuelidate": "^0.7.7",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.1",

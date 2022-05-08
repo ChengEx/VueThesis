@@ -21,7 +21,8 @@
                     console.log("res:",res)
                     //localStorage.setItem('token',res.data.token)
                     localStorage.setItem('profile', JSON.stringify(res.data));
-
+                    this.$store.dispatch('user',res.data)
+                    this.$router.push('/') 
                 }).catch((error)=>{
                     alert(error.response.data.message)
                 })
@@ -41,9 +42,9 @@
             </div>
             <div class="info_div">
                 <p>還沒成為會員嗎? 
-                    <RouterLink to="/signup" style="text-decoration: none;">
+                    <router-link to="/signup" style="text-decoration: none;">
                         Sign up
-                    </RouterLink>
+                    </router-link>
                 </p>
             </div>
         </form>

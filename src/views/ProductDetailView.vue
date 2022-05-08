@@ -14,7 +14,7 @@
             }
         },
         created() {
-            getInventoryById()
+            getInventoryById(this.$route.params.id)
         //APIRequest.get('/Inventory/'+this.$route.params.id)
             .then(response=>{
               this.productdata = response.data;
