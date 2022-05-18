@@ -6,7 +6,7 @@
     data(){
       return {
         // userdata:{}
-        userdata: this.$store.state.user
+        //userdata: this.$store.state.user
       }
     },
     created(){
@@ -45,20 +45,20 @@
 
 <!-- 看分類是否要加進資料庫 -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             Category 1
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li> 
                 <router-link class="dropdown-item" to="/about" style="text-decoration: none; color: inherit;">Product 1 </router-link>
             </li>
-            <li> <a class="dropdown-item" href="#"> Product 2 </a> </li>
+            <li> <a class="dropdown-item" href="/"> Product 2 </a> </li>
             <li> <hr class="dropdown-divider"></li>
-            <li> <a class="dropdown-item" href="#"> Product 3 </a> </li>
+            <li> <a class="dropdown-item" href="/"> Product 3 </a> </li>
           </ul>
         </li>
-        
       </ul>
+
       <div v-if="!$store.getters['user']">
         <router-link class="nav-link" to="/signin" style="text-decoration: none; color: inherit;">Sign in</router-link>
       </div>
@@ -67,19 +67,14 @@
           <li class="nav-item" >
             <button @click="logout" style="border: none; background: none;">
               Sign out
-            </button>
-            
+            </button>   
           </li>
         </ul>
-        <!-- <router-link class="nav-link"  style="text-decoration: none; color: inherit;"> 你好   Sign out</router-link> -->
       </div>
+      
       <div>
         <router-link class="nav-link" to="/" style="text-decoration: none; color: inherit;">Cart</router-link>
       </div>
-      <!-- <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit"> Search </button>
-      </form> -->
     </div>
   </div>
 </nav>

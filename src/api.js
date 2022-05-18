@@ -30,3 +30,6 @@ export const getInventories = () => {
 export const getInventoryById = (id) => {
     return APIRequest.get(`/Inventory/${id}`);
 }
+
+
+

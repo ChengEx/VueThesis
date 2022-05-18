@@ -3,8 +3,8 @@ import { createStore } from 'vuex'
 
 export default createStore({
     state: {
-        // user: JSON.parse(localStorage.getItem('profile'))
-        user:null
+        user: JSON.parse(localStorage.getItem('profile'))
+        //user: null
        
     },
     getters: {

@@ -1,5 +1,4 @@
 <script>
-    import axios from 'axios'
     import { getInventoryById } from '../api.js'
     export default {
         data(){
@@ -15,17 +14,12 @@
         },
         created() {
             getInventoryById(this.$route.params.id)
-        //APIRequest.get('/Inventory/'+this.$route.params.id)
             .then(response=>{
               this.productdata = response.data;
             }).catch(error => {
               console.log(error);
             })
-          
         },
-        computed(){
-
-        }
     }
 </script>
 
@@ -33,5 +27,4 @@
     <img :src="(productdata.productDetail[0].options.image)" />
     <div>{{ productdata._id }}</div>
     <div>{{ productdata.name }}</div>
-    
 </template>
