@@ -1,18 +1,9 @@
 <script>
-
-  //import { mapGetters } from 'vuex'
   export default {
-
     data(){
       return {
-        // userdata:{}
-        //userdata: this.$store.state.user
+
       }
-    },
-    created(){
-      //this.userdata =  this.$store.state.user
-      //console.log("nav",this.$store.getters['user'])
-      //console.log("nav",this.$store.state.user)
     },
     methods:{
       logout(){
@@ -20,31 +11,27 @@
         this.$store.dispatch('user', null)
       }
     },
-    computed: {
-      //...mapGetters(['user'])
-    }
   }
 </script>
 <template>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <router-link class="navbar-brand" aria-current="page" to="/">電商平台</router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <router-link class="navbar-brand " aria-current="page" to="/" style="margin-right: 30px; font-size:30px;" >電商平台</router-link>
+
     <div class="collapse navbar-collapse mt-3 mb-3" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <!-- <button @click="test">abc</button> -->
-        <!-- <li class="nav-item">
-            <RouterLink class="nav-link" aria-current="page" to="/">Home</RouterLink>
-          <a class="nav-link active" aria-current="page" href="#"> Home </a>
-        </li> -->
-        <!-- <li class="nav-item">
-            <RouterLink class="nav-link" to="/about">About</RouterLink>
-        </li> -->
 
 <!-- 看分類是否要加進資料庫 -->
-        <li class="nav-item dropdown">
+        <li class="nav-item insidefont" style="margin-right: 20px;">
+          <router-link class="nav-link" aria-current="page" to="/male">Male</router-link>
+        </li>
+        <li class="nav-item insidefont" style="margin-right: 20px;">
+          <router-link class="nav-link" aria-current="page" to="/female">Female</router-link>
+        </li>
+        <li class="nav-item insidefont" style="margin-right: 20px;">
+          <router-link class="nav-link" aria-current="page" to="/kids">Kids</router-link>
+        </li>
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             Category 1
           </a>
@@ -56,25 +43,33 @@
             <li> <hr class="dropdown-divider"></li>
             <li> <a class="dropdown-item" href="/"> Product 3 </a> </li>
           </ul>
+        </li> -->
+        
+        <li class="nav-item">
+          <router-link class="nav-link insidefont" aria-current="page" to="/backstage">暫時後台</router-link>
         </li>
       </ul>
 
       <div v-if="!$store.getters['user']">
-        <router-link class="nav-link" to="/signin" style="text-decoration: none; color: inherit;">Sign in</router-link>
+        <router-link class="nav-link insidefont mr-5" to="/signin" style="text-decoration: none; color: inherit;">Sign in</router-link>
       </div>
       <div v-else>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item" >
-            <button @click="logout" style="border: none; background: none;">
+            <button class="insidefont" @click="logout" style="border: none; background: none; margin-right: 15px;">
               Sign out
             </button>   
           </li>
+          <li class="nav-item">
+            <router-link class="insidefont" to="/shoppingcart" style="text-decoration: none; color: inherit;">Cart</router-link>
+          </li>
         </ul>
+        
       </div>
-      
-      <div>
+
+      <!-- <div>
         <router-link class="nav-link" to="/" style="text-decoration: none; color: inherit;">Cart</router-link>
-      </div>
+      </div> -->
     </div>
   </div>
 </nav>
@@ -83,5 +78,9 @@
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
- }
+}
+
+.insidefont {
+  font-size:20px;
+}
 </style>

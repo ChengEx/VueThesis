@@ -11,7 +11,7 @@ const APIRequest = axios.create({
 APIRequest.interceptors.request.use((req)=>{
       
   if (localStorage.getItem('profile')) {
-    console.log(localStorage.getItem('profile'))
+    //console.log(localStorage.getItem('profile'))
     req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
   }
 
@@ -29,6 +29,13 @@ export const getInventories = () => {
 }
 export const getInventoryById = (id) => {
     return APIRequest.get(`/Inventory/${id}`);
+}
+export const getInventoriesByCategories = (category,type) => {
+    return APIRequest.get(`/Inventory/${category}/${type}`);
+}
+
+export const addInventories = (data) => {
+    return APIRequest.post('/Inventory',data);
 }
 
 
