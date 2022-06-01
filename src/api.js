@@ -42,5 +42,19 @@ export const addInventories = (data) => {
     return APIRequest.post('/Inventory',data);
 }
 
-
+export const getCart = (id) => {
+    return APIRequest.get(`/Cart/${id}`);
+}
+export const addCart = (data) => {
+    return APIRequest.post('/Cart', data);
+}
+export const addCartQuantity = (id) => {
+    return APIRequest.post(`/Cart/addCartQuantity/${id}`);
+}
+export const minusCartQuantity = (id) => {
+    return APIRequest.post(`/Cart/minusCartQuantity/${id}`);
+}
+export const deleteCart = (id) => {
+    return APIRequest.post(`/Cart/deleteCart/${id}`);
+}
 

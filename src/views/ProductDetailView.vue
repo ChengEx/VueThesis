@@ -1,5 +1,5 @@
 <script>
-    import { getInventoryById } from '../api.js'
+    import { getInventoryById, addCart } from '../api.js'
     export default {
         data(){
             return {
@@ -7,6 +7,7 @@
                 cartData:{
                     size:"",
                     quantity:0,
+                    totalprice:0
                 }
             }
         },
@@ -35,6 +36,25 @@
             },
             minus(){
                 this.cartData.quantity===0 ? (this.cartData.quantity=0):(this.cartData.quantity-=1);
+            },
+            async submitCart(){
+                if(!JSON.parse(localStorage.getItem('profile'))){
+                    alert("請先登入會員");
+                    this.$router.push('/signin');
+                }else{
+                    await addCart({
+                        productid: this.productdata._id,
+                        size: this.cartData.size,
+                        quantity: this.cartData.quantity,
+                        totalprice: this.productdata.productDetail?.price?.discount*this.cartData.quantity,
+                        customerid: JSON.parse(localStorage.getItem('profile'))._id        
+                    }).then((res)=>{
+                        console.log(res);
+                        alert('購物車成功發送!')
+                    }).catch((err) => {
+                        alert(err.response.data.message)
+                    })
+                }
             }
         },
         created() {
@@ -88,6 +108,9 @@
                     </div>
                     
                 </div>
+                <div class="row mt-5">
+                    <button class="submit-button" style="width:60%;" @click.prevent="submitCart">加入購物車</button>
+                </div>
                 
             </div>
         </div>
@@ -109,5 +132,42 @@
 }
 .current {
     border: 1px solid #333;
+}
+.submit-button  {
+    margin-left: auto;
+    margin-right: auto;
+    background: #FF4742;
+    border: 1px solid #FF4742;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+}
+
+.submit-button:hover,
+.submit-button:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+}
+
+.submit-button:active {
+  opacity: .5;
 }
 </style>
