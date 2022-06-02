@@ -1,5 +1,6 @@
 <script>
     import { getCart, addCartQuantity, minusCartQuantity, deleteCart } from '../api.js'
+    import { jwtExpired } from '../jwtExpired.js';
     export default {
         
         data(){
@@ -15,7 +16,9 @@
                     console.log("minus res",res);
                     this.cartData = res.data;
                 }).catch((err)=>{
-                    alert(err.response.data.message)
+                    alert(err.response.data.message);
+                    // localStorage.clear();
+                    // this.$router.push('/signin');     
                 })
             },
             async plusCartQuantity(cartID){
@@ -24,7 +27,10 @@
                     console.log("add res",res);
                     this.cartData = res.data;
                 }).catch((err)=>{
-                    alert(err.response.data.message)
+                    console.log(err);
+                    alert(err.response.data.message);
+                    // localStorage.clear();
+                    // this.$router.push('/signin');                 
                 })
             },
             async deleteCartItem(cartID){
@@ -32,13 +38,11 @@
                 await deleteCart(cartID).then((res)=>{
                     this.cartData = res.data;
                 }).catch((err)=>{
-                     alert(err.response.data.message)
+                    console.log(err);
+                    alert(err.response.data.message)
                 })
             }
 
-        },
-        watch: {
-        
         },
         created(){
             console.log(JSON.parse(localStorage.getItem('profile'))._id);
@@ -47,7 +51,9 @@
                     console.log("res",res);
                     this.cartData = res.data;
                 }).catch((err)=>{
-                    alert(err.response.data.message)
+                    alert(err.response.data.message);
+                    jwtExpired();
+                    //this.$router.push('/signin');
                 })
             //}
             

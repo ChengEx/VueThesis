@@ -1,16 +1,27 @@
 <script>
+  import { getCategories } from '../api.js';
   export default {
     data(){
       return {
-
+        categoriesItem:{}
       }
     },
     methods:{
       logout(){
         localStorage.clear();
-        this.$store.dispatch('user', null)
+        //this.$store.dispatch('user', null)
       }
     },
+    created() {
+      getCategories().then(response => {
+              console.log("response:",response);
+              this.categoriesItem = response.data;
+              console.log("inventory category:",this.categoriesItem);
+              this.$store.commit("getCategoryData", this.categoriesItem?.returnCategory);
+          }).catch(error => {
+              console.log(error);
+          })
+    }
   }
 </script>
 <template>

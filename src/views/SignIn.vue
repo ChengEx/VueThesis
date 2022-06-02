@@ -86,7 +86,8 @@
     }
     .form_class {
         width: 500px;
-        padding: 40px;
+        /* height: 350px; */
+        padding: 50px;
         border-radius: 8px;
         background-color: white;
         font-family: 'system-ui';

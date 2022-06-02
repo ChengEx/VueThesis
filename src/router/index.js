@@ -9,6 +9,7 @@ import SignInView from '../views/SignIn.vue'
 import SignUpView from '../views/SignUp.vue'
 import ShoppingCart from '../views/ShoppingCart.vue'
 import BackStage from '../views/BackStage.vue'
+import SideBar from '../components/SideBar.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -16,44 +17,63 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      props: true
     },
     {
-      path:'/male',
+      path:'/:category',
       name:'maleproduct',
-      component: ProductView,
+      component: SideBar,
+      props: true,
       children:[
         {
           path:':type',
-          name:'maleproduct',
+          name:'product',
           component: ProductView,
+          props: true
         }
       ]
     },
-    {
-      path:'/female',
-      name:'femaleproduct',
-      component: ProductView,
-      children:[
-        {
-          path:':type',
-          name:'femaleproduct',
-          component: ProductView,
-        }
-      ]
-    },
-    {
-      path:'/kids',
-      name:'kidsproduct',
-      component: ProductView,
-      children:[
-        {
-          path:':type',
-          name:'kidsproduct',
-          component: ProductView,
-        }
-      ]
-    },
+    // {
+    //   path:'/female',
+    //   name:'femaleproduct',
+    //   component: SideBar,
+    //   children:[
+    //     {
+    //       path:':type',
+    //       name:'product',
+    //       component: ProductView,
+    //     }
+    //   ]
+    // },
+    // {
+    //   path:'/kids',
+    //   name:'kidsproduct',
+    //   component: SideBar,
+    //   children:[
+    //     {
+    //       path:':type',
+    //       name:'product',
+    //       component: ProductView,
+    //     }
+    //   ]
+    // },
+
+    // {
+    //   path:'/male/:type',
+    //   name:'maleproduct',
+    //   component: ProductView,
+    // },
+    // {
+    //   path:'/female/:type',
+    //   name:'femaleproduct',
+    //   component: ProductView,
+    // },
+    // {
+    //   path:'/kids/:type',
+    //   name:'kidsproduct',
+    //   component: ProductView,
+    // },
 
 
     {

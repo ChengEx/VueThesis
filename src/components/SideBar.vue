@@ -1,117 +1,101 @@
 <script>
-    import { getCategories } from '../api.js'
+    import { getCategories, getCategoriesByIdentity } from '../api.js'
     export default {
-        props:{
-          category:{
-            type: String
-          }
-        },
+        // props:{
+        //   categorytest:{
+        //     type: Array
+        //   }
+        // },
+        props: ['datatest'],
         data(){
             return{
                 AllCategory:{},
+                //-------
+                category:"",
+                categoryNow: this.$store.state.category
             }
         },
         created(){
-            getCategories().then(response =>{
-                this.AllCategory = response.data;
-                console.log(this.AllCategory);
-            }).catch(error => {
-                console.log(error);
-            }) 
+            // getCategories(this.$props.category).then(response =>{
+            //     console.log(this.$props.category);
+            //     this.AllCategory = response.data;
+            //     console.log(this.AllCategory);
+            // }).catch(error => {
+            //     console.log(error);
+            // }) 
+            // getCategoriesByIdentity(this.$props.category).then((res)=>{
+            //     this.AllCategory = res.data;
+            //     console.log(this.AllCategory);
+            // }).catch((err)=> {
+            //     console.log(err);
+            // })
+
+            //--------------------------------------------
+            console.log("categorytest",this.$store.state.category);
+            console.log("$route",this.$route)
+            const splitPath = this.$route.path.split("/");  //  /Male/Pants  -> [0]:'',[1]:Male ,[2]:Pants
+            if(splitPath.length === 2){
+                splitPath.push('default')
+            }
+            this.mainRoute = splitPath[1];
+            this.category = splitPath[1];
+            const type = splitPath[2];   
+            console.log("$route1",this.category)
+
         }
         
     }
 </script>
 <template>
-    <div v-if="category=='male'" class="col-2">
-        <!-- <div class="row">
-            <router-link to="/male/hat" style="text-decoration: none;">
-                帽子
-            </router-link>
+    <div class="container">
+        <div v-if="category=='male'" class="col-12">
+            <div class="row">
+                <div class="col-2">
+                    <div v-for="item in categoryNow.male">
+                        <router-link :key="item.categorynameEN" :to="`/male/${item.categorynameEN}`" style="text-decoration: none;">{{item.categoryname}}</router-link>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <router-view></router-view>
+                </div>
+                
+            </div>
+        
+            
         </div>
-        <div class="row">
-            <router-link to="/male/shortsleeve" style="text-decoration: none;">
+
+        <div v-else-if="category=='female'" class="col-12"> 
+            <div class="row">
+
+                <div class="col-2">
+                    <div v-for="item in  categoryNow.female">
+                        <router-link :to="`/female/${item.categorynameEN}`" style="text-decoration: none;">{{item.categoryname}}</router-link>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <router-view></router-view>
+                </div>
+            </div>
+
+        </div>
+
+        <div v-else-if="category=='kids'" class="col-12"> 
+            <router-link to="/kids/shortsleeve" style="text-decoration: none;">
                 短袖上衣
             </router-link>
-        </div>
-        <div class="row">
-            <router-link to="/male/longsleeve" style="text-decoration: none;">
+            <router-link to="/kids/longsleeve" style="text-decoration: none;">
                 長袖上衣
             </router-link>
-        </div>
-        <div class="row">
-            <router-link to="/male/blouse" style="text-decoration: none;">
-                襯衫
-            </router-link>
-        </div>
-        <div class="row">
-            <router-link to="/male/coat" style="text-decoration: none;">
+            <router-link to="/kids/coat" style="text-decoration: none;">
                 外套
             </router-link>
-        </div>
-        <div class="row">
-            <router-link to="/male/shorts" style="text-decoration: none;">
+            <router-link to="/kids/shorts" style="text-decoration: none;">
                 短褲
-            </router-link>
-        </div>
-        <div class="row">
-            <router-link to="/male/pants" style="text-decoration: none;">
+            </router-link> 
+            <router-link to="/kids/pants" style="text-decoration: none;">
                 長褲
-            </router-link>
-        </div>      -->
-        <div class="row">
-            <!-- <router-link to="/male/hat" style="text-decoration: none;">
-                帽子
-            </router-link> -->
-            <template v-for="item in AllCategory">
-                <router-link :to="`/male/${item.categorynameEN}`">{{item.categoryname}}</router-link>
-            </template>
+            </router-link> 
+            
         </div>
-    </div>
-
-    <div v-else-if="category=='female'" class="col-2"> 
-        <router-link to="/female/hat" style="text-decoration: none;">
-            帽子
-        </router-link>
-        <router-link to="/female/shortsleeve" style="text-decoration: none;">
-            短袖上衣
-        </router-link>
-        <router-link to="/female/longsleeve" style="text-decoration: none;">
-            長袖上衣
-        </router-link>
-        <router-link to="/female/dress" style="text-decoration: none;">
-            洋裝
-        </router-link>
-        <router-link to="/female/coat" style="text-decoration: none;">
-            外套
-        </router-link>
-        <router-link to="/female/shorts" style="text-decoration: none;">
-            短褲
-        </router-link>
-        <router-link to="/female/pants" style="text-decoration: none;">
-            長褲
-        </router-link>    
-        <router-link to="/female/skirt" style="text-decoration: none;">
-            裙子
-        </router-link>
-    </div>
-
-    <div v-else-if="category=='kids'" class="col-2"> 
-        <router-link to="/kids/shortsleeve" style="text-decoration: none;">
-            短袖上衣
-        </router-link>
-        <router-link to="/kids/longsleeve" style="text-decoration: none;">
-            長袖上衣
-        </router-link>
-        <router-link to="/kids/coat" style="text-decoration: none;">
-            外套
-        </router-link>
-        <router-link to="/kids/shorts" style="text-decoration: none;">
-            短褲
-        </router-link> 
-        <router-link to="/kids/pants" style="text-decoration: none;">
-            長褲
-        </router-link> 
-        
     </div>
 </template>

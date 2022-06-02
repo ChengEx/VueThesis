@@ -13,7 +13,7 @@
             Product,
             SideBar
         },
-        created() {
+        async created() {
             console.log("$route",this.$route.path)
             const splitPath = this.$route.path.split("/");  //  /Male/Pants  -> [0]:'',[1]:Male ,[2]:Pants
             if(splitPath.length === 2){
@@ -24,7 +24,7 @@
             const type = splitPath[2];   
 
             console.log("category and type",category, type);
-            this.inventories = getInventoriesByCategories(category,type).then(response =>{
+            await getInventoriesByCategories(category,type).then(response =>{
                 this.inventories = response.data;
                 console.log("inventory:", response.data);
             }).catch(error => {
@@ -37,16 +37,15 @@
     }
 </script>
 <template>
-    <div class="container">
+    <!-- <div class="container"> -->
         <div class="row">
-            <SideBar :category="mainRoute" />
-            <div class="col-10">
+            <!-- <SideBar :category="mainRoute" /> -->
+            <!-- <router-view class="view two" name="a"></router-view> -->
                 <div class="row">
                     <Product v-for="(product,index) in inventories" :key="index" :product="product" />      
                 </div>
-            </div>
             
         </div>
-    </div>
+    <!-- </div> -->
     
 </template>

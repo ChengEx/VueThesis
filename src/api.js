@@ -37,6 +37,9 @@ export const getInventoriesByCategories = (category,type) => {
 export const getCategories = () => {
     return APIRequest.get('/Category');
 }
+export const getCategoriesByIdentity = (identity) => {
+    return APIRequest.get(`/Category/${identity}`);
+}
 
 export const addInventories = (data) => {
     return APIRequest.post('/Inventory',data);

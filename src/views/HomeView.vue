@@ -1,11 +1,12 @@
 <script>
     import Carousel from '../components/Carousel.vue'
     import Product from '../components/Product.vue'
-    import { getInventories } from '../api'
+    import { getInventories, getCategories } from '../api.js'
     export default {
         data() {
           return {
-            inventory: {},  
+            inventory: {},
+            categoriesItem: {}
           }
         },      
         //註冊組件
@@ -13,14 +14,24 @@
           Carousel,
           Product
         },
-        created() {
-          this.inventory = getInventories()
-            .then(response=>{
+        async created() {
+          
+
+          getInventories().then(response=>{
               this.inventory = response.data;
               console.log("inventory:",this.inventory);
-            }).catch(error => {
+          }).catch(error => {
               console.log(error);
-            }) 
+          })
+
+          // getCategories().then(response => {
+          //     console.log("response:",response);
+          //     this.categoriesItem = response.data;
+          //     console.log("inventory:",this.categoriesItem);
+          // }).catch(error => {
+          //     console.log(error);
+          // })
+        
         },   
     }
 </script>
