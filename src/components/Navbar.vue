@@ -9,7 +9,7 @@
     methods:{
       logout(){
         localStorage.clear();
-        //this.$store.dispatch('user', null)
+        this.$store.dispatch('user', null)
       }
     },
     created() {
@@ -23,6 +23,7 @@
           })
     }
   }
+  // array = ['male','female','kids']
 </script>
 <template>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -31,7 +32,8 @@
 
     <div class="collapse navbar-collapse mt-3 mb-3" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+        
+        
 <!-- 看分類是否要加進資料庫 -->
         <li class="nav-item insidefont" style="margin-right: 20px;">
           <router-link class="nav-link" aria-current="page" to="/male">Male</router-link>
@@ -42,20 +44,7 @@
         <li class="nav-item insidefont" style="margin-right: 20px;">
           <router-link class="nav-link" aria-current="page" to="/kids">Kids</router-link>
         </li>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            Category 1
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li> 
-                <router-link class="dropdown-item" to="/about" style="text-decoration: none; color: inherit;">Product 1 </router-link>
-            </li>
-            <li> <a class="dropdown-item" href="/"> Product 2 </a> </li>
-            <li> <hr class="dropdown-divider"></li>
-            <li> <a class="dropdown-item" href="/"> Product 3 </a> </li>
-          </ul>
-        </li> -->
-        
+   
         <li class="nav-item">
           <router-link class="nav-link insidefont" aria-current="page" to="/backstage">暫時後台</router-link>
         </li>

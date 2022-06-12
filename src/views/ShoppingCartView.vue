@@ -1,6 +1,5 @@
 <script>
     import { getCart, addCartQuantity, minusCartQuantity, deleteCart } from '../api.js'
-    import { jwtExpired } from '../jwtExpired.js';
     export default {
         
         data(){

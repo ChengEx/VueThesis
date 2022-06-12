@@ -1,6 +1,6 @@
 <script>
     import Product from '../components/Product.vue'
-    import SideBar from '../components/SideBar.vue'
+    //import SideBar from '../components/SideBar.vue'
     import { getInventoriesByCategories } from '../api'
     export default {    
         data(){
@@ -11,9 +11,9 @@
         },
         components:{
             Product,
-            SideBar
+            //SideBar
         },
-        async created() {
+        created() {
             console.log("$route",this.$route.path)
             const splitPath = this.$route.path.split("/");  //  /Male/Pants  -> [0]:'',[1]:Male ,[2]:Pants
             if(splitPath.length === 2){
@@ -24,7 +24,7 @@
             const type = splitPath[2];   
 
             console.log("category and type",category, type);
-            await getInventoriesByCategories(category,type).then(response =>{
+            getInventoriesByCategories(category,type).then(response =>{
                 this.inventories = response.data;
                 console.log("inventory:", response.data);
             }).catch(error => {

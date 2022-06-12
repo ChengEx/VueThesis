@@ -1,15 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductView from '../views/ProductView.vue'
-import MaleProductView from '../views/MaleProductView.vue'
-import FemaleProductView from '../views/FemaleProductView.vue'
-import KidsProductView from '../views/KidsProductView.vue'
 import ProductDetailView from '../views/ProductDetailView.vue'
-import SignInView from '../views/SignIn.vue'
-import SignUpView from '../views/SignUp.vue'
-import ShoppingCart from '../views/ShoppingCart.vue'
+import SignInView from '../views/SignInView.vue'
+import SignUpView from '../views/SignUpView.vue'
+import ShoppingCartView from '../views/ShoppingCartView.vue'
 import BackStage from '../views/BackStage.vue'
-import SideBar from '../components/SideBar.vue';
+import SideBarView from '../views/SideBarView.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -22,8 +19,8 @@ const router = createRouter({
     },
     {
       path:'/:category',
-      name:'maleproduct',
-      component: SideBar,
+      name:'sidebar',
+      component: SideBarView,
       props: true,
       children:[
         {
@@ -34,48 +31,6 @@ const router = createRouter({
         }
       ]
     },
-    // {
-    //   path:'/female',
-    //   name:'femaleproduct',
-    //   component: SideBar,
-    //   children:[
-    //     {
-    //       path:':type',
-    //       name:'product',
-    //       component: ProductView,
-    //     }
-    //   ]
-    // },
-    // {
-    //   path:'/kids',
-    //   name:'kidsproduct',
-    //   component: SideBar,
-    //   children:[
-    //     {
-    //       path:':type',
-    //       name:'product',
-    //       component: ProductView,
-    //     }
-    //   ]
-    // },
-
-    // {
-    //   path:'/male/:type',
-    //   name:'maleproduct',
-    //   component: ProductView,
-    // },
-    // {
-    //   path:'/female/:type',
-    //   name:'femaleproduct',
-    //   component: ProductView,
-    // },
-    // {
-    //   path:'/kids/:type',
-    //   name:'kidsproduct',
-    //   component: ProductView,
-    // },
-
-
     {
       path:'/product/:id',
       name:'productdetail',
@@ -94,7 +49,7 @@ const router = createRouter({
     {
       path:'/shoppingcart',
       name:'shoppingcart',
-      component: ShoppingCart
+      component: ShoppingCartView
     },
     {
       path:'/backstage',

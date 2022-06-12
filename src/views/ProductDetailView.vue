@@ -11,6 +11,14 @@
                 }
             }
         },
+        created() {
+            getInventoryById(this.$route.params.id).then(response=>{
+                this.productdata = response.data;
+                console.log("getInventoryById",this.productdata);
+            }).catch(error => {
+                console.log(error);
+            })
+        },
         methods:{
             addList(ev){
                 //console.log("ev",ev);
@@ -57,14 +65,7 @@
                 }
             }
         },
-        created() {
-            getInventoryById(this.$route.params.id).then(response=>{
-                this.productdata = response.data;
-                console.log("getInventoryById",this.productdata);
-            }).catch(error => {
-                console.log(error);
-            })
-        },
+        
     }
 </script>
 
@@ -93,9 +94,8 @@
                 </div>
                 <hr class="hrhr mt-3">
                 <div style="display:flex;">
-                    <button class="size-button" v-for="(siglesize, index) in productdata.productDetail?.options?.allsize" :id="siglesize.size" @click.prevent="addList($event)">{{siglesize.size}}</button>
-                    <!-- web api to productdata.productDetail.options.size, and use v-for to displat all size
-                    then all button have @click to send request to server to search size's quantity -->
+                    <button class="size-button" v-for="(siglesize, index) in productdata.productDetail?.options?.allsize"
+                        :id="siglesize.size" @click.prevent="addList($event)">{{siglesize.size}}</button>
                     <div class="mt-3" style="display:flex; margin-left:30px;">
                         <span class="buttonStyle" id="minus" @click="minus">
                             <i class="fa fa-minus mt-1" style="margin-right:10px;"></i>    

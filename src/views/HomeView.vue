@@ -24,13 +24,6 @@
               console.log(error);
           })
 
-          // getCategories().then(response => {
-          //     console.log("response:",response);
-          //     this.categoriesItem = response.data;
-          //     console.log("inventory:",this.categoriesItem);
-          // }).catch(error => {
-          //     console.log(error);
-          // })
         
         },   
     }
