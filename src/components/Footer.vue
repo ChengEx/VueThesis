@@ -26,7 +26,6 @@
             <img class="item" src="../assets/img/phone.PNG">
             <h5 class="font">0937-159-881</h5>
         </div>
-
     </div>
 </div>
 </template>
